@@ -7,10 +7,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import capitalizeString from './utils/capitalize-string';
+import dateFormatter from './utils/date-formatter';
 let RecentReportsItem = class RecentReportsItem extends LitElement {
     constructor() {
         super(...arguments);
         this.report = {};
+        this.editReportsMode = false;
     }
     connectedCallback() {
         super.connectedCallback();
@@ -25,7 +27,6 @@ let RecentReportsItem = class RecentReportsItem extends LitElement {
             this.livesIn = (_k = this.report) === null || _k === void 0 ? void 0 : _k.detailsCityState;
             this.reportType = 'Person';
         }
-        console.log(this.report);
     }
     render() {
         const newInfoTag = html ` <div class="new-info-tag">NEW INFO</div>`;
@@ -38,10 +39,30 @@ let RecentReportsItem = class RecentReportsItem extends LitElement {
         ${this.reportType === 'Professional' ? 'Professional Profile' : `${this.reportType} Report`}
       </p>
     `;
+        const createdAtInfo = html `
+      <p class='info'>
+        Updated
+        <span>${dateFormatter(this.report.updatedAt, 'MM/DD/YYYY')}</span>
+        |
+        Created
+        <span>${dateFormatter(this.report.createdAt, 'MM/DD/YYYY')}</span>
+      </p>
+    `;
+        const deleteReportButton = html `
+      <button class="remove-btn automation-recent-reports-remove-report" @click="${() => this.deleteReportCallback()}">
+        <span class="fa fa-remove">x</span> Remove report <!-- TODO: add font-awesome-->
+      </button>
+    `;
+        const actionsBlock = html `
+      <button class="redirect-btn automation-recent-reports-data-card-cta" @click="${() => this.viewReportCallback()}">
+        View report
+      </button>
+
+    `;
         return html `
       <div class="recent-reports-item automation-recent-reports-data-card">
         ${this.shouldShowNewInfoTag ? newInfoTag : ''}
-        <div class="recent-reports__report__info">
+        <div class="report-item-info">
           <h4 class="title">
             ${this.reportInfo}${this.age ? `, ${this.age}` : ''}
             ${this.city ? cityInfo : ''}
@@ -50,6 +71,10 @@ let RecentReportsItem = class RecentReportsItem extends LitElement {
             ${this.detailsYMM ? detailsYMMInfo : ''}
           </h4>
           ${this.reportType ? reportTypeInfo : ''}
+          ${this.report.updatedAt || this.report.createdAt ? createdAtInfo : ''}
+        </div>
+        <div class="report-item-actions">
+          ${this.editReportsMode ? deleteReportButton : actionsBlock}
         </div>
       </div>
     `;
@@ -57,6 +82,7 @@ let RecentReportsItem = class RecentReportsItem extends LitElement {
 };
 RecentReportsItem.styles = css `
     .recent-reports-item {
+      font-family: "Lato", sans-serif;
       background-color: #ffffff;
       border: solid 1px #000;
       margin: 0;
@@ -80,6 +106,15 @@ RecentReportsItem.styles = css `
       top: -10px;
       right: -8px;
       z-index: 2;
+    }
+
+    .report-item-info, .report-item-actions {
+      width: 50%;
+      position: relative;
+    }
+
+    .report-item-actions {
+      text-align: right;
     }
 
     .title {
@@ -106,10 +141,42 @@ RecentReportsItem.styles = css `
       margin-bottom: 10px;
       color: #000;
     }
+
+    .info {
+      font-size: 14px;
+      color: #757575;
+      margin-bottom: 0;
+    }
+
+    .redirect-btn {
+      font-size: 16px;
+      font-weight: bold;
+      background-color: #000;
+      min-width: 140px;
+      height: 40px;
+      color: #ffffff;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .remove-btn {
+      background-color: transparent;
+      border: 0;
+      font-size: 16px;
+      font-weight: bold;
+      color: #000;
+      height: 30px;
+      cursor: pointer;
+    }
   `;
 __decorate([
     property({ type: Object })
 ], RecentReportsItem.prototype, "report", void 0);
+__decorate([
+    property({ type: Boolean })
+], RecentReportsItem.prototype, "editReportsMode", void 0);
 RecentReportsItem = __decorate([
     customElement('recent-reports-item')
 ], RecentReportsItem);

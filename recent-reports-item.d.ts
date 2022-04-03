@@ -1,6 +1,20 @@
 import { LitElement } from 'lit';
+declare type ReportItemDetails = {
+    has_new_info: boolean;
+    age: number;
+    first_name: string;
+    last_name: string;
+};
+declare type ReportItem = {
+    details: ReportItemDetails;
+    updatedAt: string;
+    createdAt: string;
+    isPerson: boolean;
+    detailsCityState: string;
+};
 export declare class RecentReportsItem extends LitElement {
-    report: {};
+    report: ReportItem;
+    editReportsMode: boolean;
     shouldShowNewInfoTag: Boolean | undefined;
     reportInfo: String | undefined;
     age: Number | undefined;
@@ -9,6 +23,8 @@ export declare class RecentReportsItem extends LitElement {
     livesIn: String | undefined;
     detailsYMM: String | undefined;
     reportType: string | undefined;
+    viewReportCallback: any;
+    deleteReportCallback: any;
     static styles: import("lit").CSSResult;
     connectedCallback(): void;
     buildReportInfo(): void;
@@ -19,4 +35,5 @@ declare global {
         'recent-reports-item': RecentReportsItem;
     }
 }
+export {};
 //# sourceMappingURL=recent-reports-item.d.ts.map

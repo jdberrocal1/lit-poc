@@ -10,7 +10,7 @@
     <script type="module" src="../recent-reports-item.js"></script>
     <style>
       p {
-        border: solid 1px blue;
+        border: solid 1px blue !important;
         padding: 8px;
       }
     </style>
@@ -21,7 +21,7 @@
     <my-element>
       <p>This is child content</p>
     </my-element>
-    <recent-reports-item report='{"isPerson":true, "detailsCityState": "Fort Lauderdale, FL", "details": {"has_new_info": true, "first_name": "daniel", "last_name": "berrocal", "age": 30}}'></recent-reports-item>
-    <recent-reports-item report='{"name":"hi", "details": {"has_new_info": false}}'></recent-reports-item>
+    <recent-reports-item report='{"isPerson":true, "updatedAt": "2022-03-18 01:12:04 -0500", "createdAt": "2022-03-18 01:04:46 -0500","detailsCityState": "Fort Lauderdale, FL", "details": {"has_new_info": true, "first_name": "daniel", "last_name": "berrocal", "age": 30}}'></recent-reports-item>
+    <recent-reports-item report='{"isPerson":true, "details": {"has_new_info": false}}' editReportsMode=true></recent-reports-item>
   </body>
 </html>

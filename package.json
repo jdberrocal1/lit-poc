@@ -41,6 +41,7 @@
   "author": "Google LLC",
   "license": "BSD-3-Clause",
   "dependencies": {
+    "dayjs": "^1.11.0",
     "lit": "^2.1.0"
   },
   "devDependencies": {
